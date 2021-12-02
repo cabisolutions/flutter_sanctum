@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/screen/login_screen.dart';
 import 'package:flutter_sanctum/screen/posts_screen.dart';
 
 class  NavDrawer extends StatelessWidget{
@@ -20,7 +21,16 @@ class  NavDrawer extends StatelessWidget{
                 MaterialPageRoute(
                   builder: (context) => const PostsScreen()));
             },
-          )
+          ),
+          ListTile(
+            title: const Text('Login'),
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const LoginScreen()));
+            },
+          ),
         ],
       ),
     );
