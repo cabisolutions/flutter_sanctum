@@ -30,7 +30,7 @@ class  NavDrawer extends StatelessWidget{
                 ListTile(
                   title: const Text('Logout'),
                   onTap: () {
-                    //
+                    Provider.of<Auth>(context, listen: false).logout();
                   },
                 )
               ],
@@ -38,6 +38,15 @@ class  NavDrawer extends StatelessWidget{
           } else {
             return ListView( 
               children: [
+                ListTile(
+                  title: const Text('Login'),
+                  onTap: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => const LoginScreen()));
+                  },
+                ),
                 ListTile(
                   title: const Text('Register'),
                   onTap: () {
