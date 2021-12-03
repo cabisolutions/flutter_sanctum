@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/providers/auth.dart';
 import 'package:flutter_sanctum/screen/login_screen.dart';
 import 'package:flutter_sanctum/screen/posts_screen.dart';
+import 'package:provider/provider.dart';
 
 class  NavDrawer extends StatelessWidget{
   const NavDrawer({Key? key}) : super(key: key);
@@ -8,31 +10,48 @@ class  NavDrawer extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return Drawer(
-      child: ListView(
-        children: [
-          const ListTile(
-            title: Text('Equipo 7'),
-          ),
-          ListTile(
-            title: const Text('Posts'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const PostsScreen()));
-            },
-          ),
-          ListTile(
-            title: const Text('Login'),
-            onTap: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => const LoginScreen()));
-            },
-          ),
-        ],
-      ),
+      child: Consumer<Auth>(
+        builder: (context, auth, child) {
+          if(auth.authenticated){
+            return  ListView(
+              children: [
+                const ListTile(
+                  title: Text('Equipo 7'),
+                ),
+                ListTile(
+                  title: const Text('Posts'),
+                  onTap: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => const PostsScreen()));
+                  },
+                ),
+                ListTile(
+                  title: const Text('Logout'),
+                  onTap: () {
+                    //
+                  },
+                )
+              ],
+            );
+          } else {
+            return ListView( 
+              children: [
+                ListTile(
+                  title: const Text('Register'),
+                  onTap: () {
+                    Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                    builder: (context) => const LoginScreen()));
+                  },
+                ),
+              ],
+            );
+          }
+        },
+      )
     );
   }
 }

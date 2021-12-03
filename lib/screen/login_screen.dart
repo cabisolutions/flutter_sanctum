@@ -1,7 +1,10 @@
-import 'dart:developer';
+//import 'dart:developer';
 
-import 'package:flutter/cupertino.dart';
+//import 'package:flutter/cupertino.dart';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_sanctum/providers/auth.dart';
+import 'package:provider/provider.dart';
 
 class LoginScreen extends StatefulWidget{
   const LoginScreen({Key? key}) : super(key: key);
@@ -19,8 +22,13 @@ class LoginState extends State<LoginScreen>{
   String _password = '';
 
   void submit () {
-    log(_email);
-    log(_password);
+    Provider.of<Auth>(context, listen:false ).login(
+      credentials: {
+        'email': _email,
+        'password' : _password
+      }
+    );
+    Navigator.pop(context);
   }
 
   @override
@@ -33,10 +41,11 @@ class LoginState extends State<LoginScreen>{
         key: _formKey,
         child: Scrollbar(
           child:SingleChildScrollView(
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               children: [
                 TextFormField(
+                  initialValue: 'equipo7@gmail.com',
                   decoration: const InputDecoration(
                     labelText: 'Email',
                     hintText: 'you@somewhere.com', 
@@ -46,6 +55,7 @@ class LoginState extends State<LoginScreen>{
                   },
                 ),
                 TextFormField(
+                  initialValue: 'password',
                   decoration: const InputDecoration(
                     labelText: 'Password', 
                   ),
@@ -59,7 +69,7 @@ class LoginState extends State<LoginScreen>{
                     onPressed: () {
                       _formKey.currentState!.save();
 
-                     this.submit();
+                     submit();
                     }, 
                    child: const Text('Login')
                   )
