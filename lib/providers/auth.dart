@@ -5,10 +5,13 @@ import 'dart:developer';
 import 'package:dio/dio.dart' as Dio;
 import 'package:flutter_sanctum/models/user.dart';
 import 'package:flutter_sanctum/widgets/dio.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:platform_device_id/platform_device_id.dart';
 
 class Auth extends ChangeNotifier {
   bool _authenticated = false;
+
+  final storage = FlutterSecureStorage();
 
   late User _user;
   User get user => _user;
@@ -25,6 +28,7 @@ class Auth extends ChangeNotifier {
     log(token);
 
     await attempt(token);
+    storeToke(token);
   }
 
   Future attempt(String token) async {
@@ -45,6 +49,10 @@ class Auth extends ChangeNotifier {
     }
 
     notifyListeners();
+  }
+
+  storeToke(String token) async {
+    await storage.write(key: 'auth', value: token);
   }
 
   Future getDeviceID() async {
