@@ -4,12 +4,10 @@ import 'package:flutter_sanctum/widgets/nav_drawer.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (_) => Auth(),
-      child: const MyApp(),
-    )
-  );
+  runApp(ChangeNotifierProvider(
+    create: (_) => Auth(),
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -19,7 +17,8 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      debugShowCheckedModeBanner: false,
+      title: 'Flutter sanctum',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
@@ -38,7 +37,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
   @override
   Widget build(BuildContext context) {
     // This method is rerun every time setState is called, for instance as done
@@ -52,17 +50,15 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: const NavDrawer(),
-      body: Center(
-        child: Consumer<Auth>(
-          builder: (context, auth, child){
-            if (auth.authenticated){
-              return const Text('You are logged in');
-            } else {
-              return const Text('You are not logged in');
-            }
-          },
-        )
-      ),
+      body: Center(child: Consumer<Auth>(
+        builder: (context, auth, child) {
+          if (auth.authenticated) {
+            return const Text('You are logged in');
+          } else {
+            return const Text('You are not logged in');
+          }
+        },
+      )),
     );
   }
 }
