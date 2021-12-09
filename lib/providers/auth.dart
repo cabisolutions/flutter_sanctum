@@ -71,3 +71,7 @@ class Auth extends ChangeNotifier {
     notifyListeners();
   }
 }
+
+Future getToken() async {
+  return await storage.read(key: 'auth');
+}
